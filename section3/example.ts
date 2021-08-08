@@ -97,3 +97,44 @@ function getScoreAmount(score: "A" | "B" | "C") {
       return 30
   }
 }
+
+/**
+ * 3-5 Promiseの型推論
+ * Promiseを含むコードの中では、記述を少し追加する必要がある
+ */
+// function wait(duration: number) {
+//   return new Promise(resolve => {
+//     setTimeout(() => resolve(`${duration}ms passed`), duration)
+//   })
+// }
+// wait(1000).then(res => {}) // resは{}型
+
+/**
+ * 3-5-2 resolve関数の引数を指定する
+ * resolve関数の引数を明示的に指定することにより、先にあげた問題が解決される。
+ */
+
+// 関数戻り型アノテーションで指定する方法
+// function wait(duration: number): Promise<string> {
+//   return new Promise(resolve => {
+//     setTimeout(() => resolve(`${duration}ms passed`), duration);
+//   })
+// }
+// wait(1000).then(res => { }) // resはstring型
+
+// Promiseインスタンス作成時に型を付与する方法
+function wait(duration: number) {
+  return new Promise<string>(resolve => {
+    setTimeout(() => resolve(`${duration}ms passed`), duration);
+  })
+}
+wait(1000).then(res => { }) // resはstring型
+
+/**
+ * 3-5-3 async関数
+ * asunc関数の中でawaitすることでも、適切な型推論が行われる
+ */
+async function queue() {
+  const message = await wait(1000) // const message: string
+  return message
+}
