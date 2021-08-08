@@ -145,3 +145,8 @@ async function queue() {
  * (test.ts, index.tsを参照)
  */
 
+/**
+ * 3-7 JSONの型推論
+ * JSONファイルを外部モジュールとしてインポートし、定義内容を型推論できる。利用するためには、tsconfig.jsonのresolveJsonModuleとesModuleInteropをtrueに設定する
+ * (users.jsonを参照)
+ */
