@@ -60,3 +60,40 @@ const obj = {
   baz: "2" as "2"
 }
 obj["foo"] = true;
+
+/**
+ * 3-4 関数の戻り型推論
+ * 「定義内容の型推論を優先するのか」「定義内容を宣言で制約するのか」は状況に応じてプログラマーの判断で戻り型アノテーションの付与を決定する
+ */
+function getPriceLabel(amount: number, tax: number) {
+  return `¥${amount * tax}`
+}
+
+function log(message: string) {
+  console.log(message)
+}
+
+function getStringValue(value: number, prefix?: string): string {
+  if (prefix === undefined) return value // Error
+  return `${prefix} ${value}`
+}
+
+/**
+ * 3-4-2 処理内容により変わる型推論
+ * 関数内に条件分岐がある場合など、戻り型が曖昧な物も、定義内容に応じてUnionTypesで型推論が適用される
+ */
+function getScore(score: number) {
+  if (score < 0 || score > 100) return null
+  return score
+}
+
+function getScoreAmount(score: "A" | "B" | "C") {
+  switch (score) {
+    case "A":
+      return 100
+    case "B":
+      return 60
+    case "C":
+      return 30
+  }
+}
