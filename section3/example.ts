@@ -138,3 +138,10 @@ async function queue() {
   const message = await wait(1000) // const message: string
   return message
 }
+
+/**
+ * 3-6 import構文の型推論
+ * 外部モジュールで定義された変数や関数は、型付与の有無を問わず、そのまま型推論の対象となる。このような振る舞いはimport構文を用いた場合に限られ、require構文では型推論を行わない
+ * (test.ts, index.tsを参照)
+ */
+
