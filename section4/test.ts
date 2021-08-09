@@ -48,3 +48,42 @@ function getFormattedValue(value: number, unit = "pt") {
 console.log(getFormattedValue(100))
 console.log(getFormattedValue(100, "kg"))
 console.log(getFormattedValue(100, 0))
+
+/**
+ * 4-1-4 オブジェクトの型安全
+ * 全てのプロパティがオプショナルな型は「WeakType」と呼ぶ
+ */
+type User = {
+  age?: number
+  name?: string
+}
+function registerUser(user: User) { }
+
+// 型にはないプロパティを持つオブジェクト
+const maybeUser = {
+  age: 26,
+  name: "Taro",
+  gender: "male"
+}
+// 型と一致するプロパティを一つも持たないオブジェクト
+const notUser = {
+  gender: "male",
+  graduate: "Tokyo"
+}
+registerUser(maybeUser)
+registerUser(notUser)  // Error
+
+/**
+ * 4-1-5 読み込み専用プロパティ
+ * オブジェクトが保持する値を読み込み専用としたい場合は、型プロパティ名の前にreadonlyシグネチャを付与する
+ */
+type State = {
+  readonly id: number
+  name: string
+}
+const state: State = {
+  id: 1,
+  name: "Taro"
+}
+state.name = "Hanako"
+state.id = 2 // Error
