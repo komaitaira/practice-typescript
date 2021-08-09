@@ -53,10 +53,10 @@ console.log(getFormattedValue(100, 0))
  * 4-1-4 オブジェクトの型安全
  * 全てのプロパティがオプショナルな型は「WeakType」と呼ぶ
  */
-type User = {
-  age?: number
-  name?: string
-}
+// type User = {
+//   age?: number
+//   name?: string
+// }
 function registerUser(user: User) { }
 
 // 型にはないプロパティを持つオブジェクト
@@ -87,3 +87,37 @@ const state: State = {
 }
 state.name = "Hanako"
 state.id = 2 // Error
+
+
+/**
+ * 4-2-1 アップキャスト・ダウンキャスト
+ * constでオブジェクトは宣言されていてもプロパティは再代入可能であるため、型を固定できない。
+ */
+// const defaultTheme = {
+//   backgroundColor: "orange",
+//   borderColor: "red"
+// }
+// ダウンキャスト 推論される型よりも詳細な型が自明な場合、型を確約するためにアサーションで型宣言を行う。抽象的な型から詳細な型を付与することをダウンキャストという
+const defaultTheme = {
+  backgroundColor: "orange" as "orange",
+  borderColor: "red" as "red"
+}
+defaultTheme.backgroundColor = "blue"; // Error
+
+// 反対に抽象度をあげる型の付与をアップキャストという
+
+/**
+ * 4-2-2
+ * オブジェクトに動的に値を追加する
+ */
+type User = {
+  name: string
+  [k: string]: any // [k: string]をインデックスシグネチャという
+}
+const userA: User = {
+  name: "Taro",
+  age: 26
+}
+const x = userA.name
+const y = userA.age
+
