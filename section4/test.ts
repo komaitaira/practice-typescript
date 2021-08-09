@@ -110,14 +110,89 @@ defaultTheme.backgroundColor = "blue"; // Error
  * 4-2-2
  * オブジェクトに動的に値を追加する
  */
-type User = {
-  name: string
-  [k: string]: any // [k: string]をインデックスシグネチャという
-}
+// type User = {
+//   name: string
+//   [k: string]: any // [k: string]をインデックスシグネチャという
+// }
 const userA: User = {
   name: "Taro",
   age: 26
 }
 const x = userA.name
 const y = userA.age
+
+/**
+ * 4-3-1
+ * typeof type guards
+ */
+
+function reset(value: number | string | boolean) {
+  const v0 = value
+  if (typeof value === "number") {
+    const v1 = value
+    return 0
+  }
+  const v2 = value
+  if (typeof value === "string") {
+    const v3 = value
+    return ""
+  }
+  const v4 = value
+  return false
+}
+console.log(reset(1))
+console.log(reset("1"))
+console.log(reset(true))
+
+/**
+ * 4-3-2
+ * in type guards
+ */
+type User = { gender: string }
+type UserA = User & { name: string }
+type UserB = User & { age: number; graduate: string }
+
+function judgeUserType(user: UserA | UserB) {
+  if ("gender" in user) {
+    const u0 = user
+    console.log("user type is UserA | UserB")
+  }
+  if ("name" in user) {
+    const u1 = user
+    console.log("user type is UserA")
+    return
+  }
+  const u2 = user
+  console.log("user type is UserB")
+}
+
+/**
+ * 4-3-3
+ * instanceof type guards
+ */
+class Creature {
+  breathe() {}
+}
+class Animal extends Creature {
+  shakeTail() {}
+}
+class Human extends Creature {
+  greet() {}
+}
+
+function action(creature: Animal | Human | Creature) {
+  const c0 = creature
+  c0.breathe()
+  if (creature instanceof Animal) {
+    const c1 = creature
+    return c1.shakeTail()
+  }
+  const c2 = creature
+  if (creature instanceof Human) {
+    const c3 = creature
+    return c3.greet()
+  }
+  const c4 = creature
+  return c4.breathe()
+}
 
