@@ -24,3 +24,11 @@ const box1 = boxed(1)
 const box2 = boxed(false)
 const box3 = boxed(null)
 console.log(box1)
+
+/**
+ * 6-2 Conditional Types
+ * 型の互換性を条件分岐にかけ、型推論を導出する型
+ */
+type IsString<T> = T extends string ? true : false
+type X = IsString<"test">
+type Y = IsString<0>
